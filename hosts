@@ -1,7 +1,7 @@
 [webservers]
-public_ip_1 host_name=web01.hillions.net private_ip=private_ip_1
-public_ip_2 host_name=web02.hillions.net private_ip=private_ip_2
-public_ip_3 host_name=web03.hillions.net private_ip=private_ip_3
+public_ip_1 host_name=host1.domain.com private_ip=private_ip_1
+public_ip_2 host_name=host2.domain.com private_ip=private_ip_2
+public_ip_3 host_name=host3.domain.com private_ip=private_ip_3
 
 [loadbalancers]
-public_ip_1 host_name=lb01.hillions.net private_ip=private_ip_1
+public_ip_1 host_name=proxy1.domain.com private_ip=private_ip_1
