@@ -1,5 +1,6 @@
 A basic ansible playbook to configure Apache webservers and HTTPS proxy in front. 
-* Update ``hosts`` file with targets. 
+* Update ``hosts`` file with targets.
+* Update ``ansible.cfg`` with SSH private key.
 * Requires x509 certificate pairs.
 
 Example sites behind single proxy host:
