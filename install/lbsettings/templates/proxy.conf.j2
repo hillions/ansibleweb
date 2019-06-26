@@ -1,0 +1,14 @@
+ServerName = {{ host_name }}
+{% for host in groups['webservers'] %}
+<VirtualHost *:443>
+	ServerName {{ hostvars[host].host_name }}
+	SSLEngine on
+	SSLVerifyClient off
+	SSLProxyEngine on
+	SSLCertificateFile /etc/ssl/certs/{{ hostvars[host].host_name}}.crt
+	SSLCertificateKeyFile /etc/ssl/private/{{ hostvars[host].host_name}}.key
+	ProxyPreserveHost on
+	ProxyPass / https://{{ hostvars[host].host_name }}/
+	ProxyPassReverse / https://{{ hostvars[host].host_name }}/
+</VirtualHost>
+{% endfor %} 

@@ -1,0 +1,9 @@
+[webservers]
+34.217.30.123 host_name=web01.hillions.net private_ip=172.31.31.186
+
+54.187.199.104 host_name=web02.hillions.net private_ip=172.31.30.19
+
+34.220.128.230 host_name=web03.hillions.net private_ip=172.31.30.49
+
+[loadbalancers]
+35.167.144.199 host_name=lb01.hillions.net

@@ -1,0 +1,4 @@
+127.0.0.1	localhost	{{ host_name }}
+{% for host in groups ['webservers'] %}
+{{ hostvars[host].private_ip }} 	{{ hostvars[host].host_name }}
+{% endfor %}

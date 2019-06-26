@@ -1,0 +1,78 @@
+---
+#
+# Web server settings
+#
+
+- name: Set hostname
+  hostname:
+    name: "{{host_name}}"
+
+- name: Add hostname to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^127\.0\.0\.1[ \t]+localhost'
+    line: '127.0.0.1 localhost {{host_name}}'
+    state: present
+
+- name: Disable SELinux
+  command: setenforce 0
+
+- name: Include sites-enabled conf files
+  copy:
+    src: sites-enabled.conf
+    dest: /etc/httpd/conf.d/
+    owner: apache
+    group: apache
+
+- name: Create sites-availble directory
+  file:
+    path: /etc/httpd/sites-available/
+    state: directory
+    mode: '0755'
+
+- name: Create sites-enabled directory
+  file:
+    path: /etc/httpd/sites-enabled/
+    state: directory
+    mode: '0755'
+
+- name: Copy site.conf from template
+  template:
+    src: site.conf.j2
+    dest: "/etc/httpd/sites-available/{{host_name}}.conf"
+    owner: apache
+    group: apache
+
+- name: Link site.conf to sites-enabled
+  file:
+    src: "/etc/httpd/sites-available/{{host_name}}.conf"
+    dest: "/etc/httpd/sites-enabled/{{host_name}}.conf"
+    owner: apache
+    group: apache
+    state: link
+
+- name: Make web directories
+  file:
+    path: "/var/www/{{host_name}}/public_html/"
+    state: directory
+    mode: '0755'
+
+- name: Create ssl private key directory
+  file:
+    path: /etc/ssl/private/
+    state: directory
+    mode: '0750'
+
+- name: Copy server certificate
+  template:
+    src: "{{host_name}}.crt"
+    dest: "/etc/ssl/certs/{{host_name}}.crt"
+    owner: apache
+    group: apache
+
+- name: Copy server private key
+  template:
+    src: "{{host_name}}.key"
+    dest: "/etc/ssl/private/{{host_name}}.key"
+    owner: apache
+    group: apache

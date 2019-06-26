@@ -1,0 +1,9 @@
+<VirtualHost *:443>
+  ServerName	{{host_name}}
+  DocumentRoot	/var/www/{{host_name}}/public_html
+  ErrorLog		/var/www/{{host_name}}/error.log
+  CustomLog		/var/www/{{host_name}}/request.log combined
+  SSLEngine		on
+  SSLCertificateFile	/etc/ssl/certs/{{host_name}}.crt
+  SSLCertificateKeyFile    /etc/ssl/private/{{host_name}}.key
+</VirtualHost>

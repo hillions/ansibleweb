@@ -1,0 +1,18 @@
+---
+#
+# Install webserver packages, ensure latest version
+#
+
+  - name: Install Apache webserver or ensure latest version
+    yum:
+      name:
+        - httpd
+        - mod_ssl
+    notify: restart apache
+    ignore_errors: yes
+
+  - name: Ensure HTTPD is running
+    service:
+      name=httpd
+      state=started
+    ignore_errors: yes

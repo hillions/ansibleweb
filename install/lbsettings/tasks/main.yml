@@ -1,0 +1,53 @@
+---
+#
+# Load Balancer Settings
+#
+
+- name: Set hostname
+  hostname: 
+    name: "{{host_name}}"
+
+- name: Disable SELinux
+  command: setenforce 0
+  become: true
+
+- name: Update /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+
+- name: Copy proxy.conf
+  template: 
+    src: proxy.conf.j2
+    dest: /etc/httpd/conf.d/proxy.conf
+    owner: apache
+    group: apache
+
+- name: Create ssl private key directory
+  file:
+    path: /etc/ssl/private/
+    state: directory
+    mode: '0750'
+ 
+- name: Copy server certificates
+  template:
+    src: "{{ hostvars[item]['host_name'] }}.crt"
+    dest: "/etc/ssl/certs/{{ hostvars[item]['host_name'] }}.crt"
+    owner: apache
+    group: apache
+  with_items: "{{ groups['webservers'] }}"
+
+- name: Copy server private keys
+  template:
+    src: "{{ hostvars[item]['host_name'] }}.key"
+    dest: "/etc/ssl/private/{{ hostvars[item]['host_name'] }}.key"
+    owner: apache
+    group: apache
+  with_items: "{{ groups['webservers'] }}"
+  
+- name: Restart Apache
+  debug:
+    msg: Restarting Apache
+  notify: restart apache
