@@ -1,4 +1,4 @@
-A basic ansible playbook to create CentOS webservers and an HTTPS proxy in front. 
+A basic ansible playbook to configure Apache webservers and an Apache HTTPS proxy in front. 
 * Update ``hosts`` file with targets. 
 * Requires x509 certificate pairs.
 
