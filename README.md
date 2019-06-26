@@ -1,4 +1,4 @@
-A basic ansible playbook to create CentOS webservers and an HTTPS proxy.
+A basic ansible playbook to create CentOS webservers and an HTTPS proxy in front.
 
 [web01.hillions.net](https://web01.hillions.net)
 
